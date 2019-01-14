@@ -27,5 +27,7 @@ Route::post('/newtask', 'TaskController@addTasks');
 
 Route::delete('/taskdelete/{id}', 'TaskController@deleteTasks'); //wildcard
 
+Route::put('/taskupdate/{id}', 'TaskController@updateTasks');
+
 
 

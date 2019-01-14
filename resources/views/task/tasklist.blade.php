@@ -56,7 +56,7 @@
 									<td>5 mins ago</td>
 									<td>
 										<button type="button" class="btn btn-primary" onclick="openDeleteModal({{ $task->id }})">Delete</button>
-										<button type="button" class="btn btn-primary" onclick="openEditModal()">Edit</button>
+										<button type="button" class="btn btn-primary" onclick="openEditModal({{ $task->id }}, '{{ $task->name }}')">Edit</button>
 									</td>
 								</tr>
 
@@ -108,9 +108,11 @@
 		        </button>
 		      </div>
 		      <div class="modal-body">
-		        <form>
+		        <form id="editTaskForm" method="POST">
+		        	{{ csrf_field() }}
+		        	{{ method_field('PUT') }}
 		        	<label>Task:</label>
-		        	<input type="text" name="editedtask"></input>
+		        	<input type="text" name="editedtask" id="editedtask"></input>
 		        	<button type="submit" class="btn btn-primary">Save changes</button>
 		        </form>
 		      </div>
@@ -125,10 +127,12 @@
 	function openDeleteModal(id){
 
 		$('#deleteTask').attr("action", "/taskdelete/"+id);
-		$('#Taskdel').html('Do you want to delete this task '+id+' ?' );
+		$('#Taskdel').html('Do you want to delete this task '+name+' ?' );
 		$('#deleteModal').modal('show');
 	}
-	function openEditModal(){
+	function openEditModal(id,name){
+		// $('#editedtask').val(name);
+		$('#editTaskForm').attr("action", "/taskupdate/"+id);
 		$('#editModal').modal('show');
 	}
 </script>

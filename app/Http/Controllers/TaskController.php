@@ -21,9 +21,15 @@ class TaskController extends Controller
 		return redirect("/tasklist");
 	}
 
-	public function updateTasks()
+	public function updateTasks(Request $request, $id)
 	{	
-		
+		$taskupdate = Task::find($id);
+		$taskupdate->name = $request->editedtask;
+		$taskupdate->save();
+
+		return redirect('/tasklist');
+
+		// dd($taskupdate);
 
 	}
 

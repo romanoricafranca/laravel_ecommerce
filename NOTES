@@ -1,0 +1,13 @@
+wildcard = id
+
+Routes = /url/id
+
+Controller = method(id)
+
+
+
+patch and pu
+
+PATCH -- specific 
+
+PUT -- EDIT ALL
