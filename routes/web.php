@@ -16,10 +16,16 @@ Route::get('/', function () {
 });
 
 //greetPerson
-Route::get('/sample', "SampleController@nameoftheFunction");
+// Route::get('/sample', "SampleController@nameoftheFunction");
 //nameofFruits
-Route::get('/fruits', "SampleController@nameofAnimals");
+// Route::get('/fruits', "SampleController@nameofAnimals");
 
+
+Route::get('/tasklist', 'TaskController@showTasks');
+
+Route::post('/newtask', 'TaskController@addTasks');
+
+Route::delete('/taskdelete/{id}', 'TaskController@deleteTasks'); //wildcard
 
 
 
