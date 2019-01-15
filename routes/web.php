@@ -30,4 +30,6 @@ Route::delete('/taskdelete/{id}', 'TaskController@deleteTasks'); //wildcard
 Route::put('/taskupdate/{id}', 'TaskController@updateTasks');
 
 
+Route::get('/catalog', 'ItemController@showItems');
+
 

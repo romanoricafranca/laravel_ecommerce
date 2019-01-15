@@ -7,9 +7,9 @@ use App\Task;
 
 class TaskController extends Controller
 {
-   	public function showTasks(){
+   	public function showTasks(){    //retrieve
    		$tasks = Task::all();
-		return view ('task.tasklist', compact("tasks"));
+		return view ('task.tasklist', compact("tasks")); //to view folder by file
 	}
 
 	public function addTasks(Request $request)
@@ -29,7 +29,7 @@ class TaskController extends Controller
 
 		return redirect('/tasklist');
 
-		// dd($taskupdate);
+		// dd($taskupdate); 
 
 	}
 
@@ -39,5 +39,5 @@ class TaskController extends Controller
 		$taskdelete->delete();
 		return redirect('/tasklist');
 
-	} 
+	}
 }
