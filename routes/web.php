@@ -22,14 +22,19 @@ Route::get('/', function () {
 
 
 Route::get('/tasklist', 'TaskController@showTasks');
-
 Route::post('/newtask', 'TaskController@addTasks');
-
 Route::delete('/taskdelete/{id}', 'TaskController@deleteTasks'); //wildcard
-
 Route::put('/taskupdate/{id}', 'TaskController@updateTasks');
 
 
 Route::get('/catalog', 'ItemController@showItems');
+
+Route::get('/menu/add', 'ItemController@showAdditemForm');
+
+Route::post('/menu/add', 'ItemController@saveItems');
+
+Route::get('/menu/{id}', 'ItemController@itemDetails');
+
+
 
 
