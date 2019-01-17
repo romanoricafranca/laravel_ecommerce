@@ -20,20 +20,27 @@
 </head>
 <body>
 
-	{{-- {{ dd($itemdetails )}} --}}
+	
 
 	 <div class="container">
-	 	
+	 	<h3 class="display-5 mt-5">Item Details</h3>
+	 	<hr class=" mb-5">
 	 	<div class="row">
+
+
 	 		
-	 		<div class="col">
+	 		<div class="col-lg-4">
 	 			<img src="/{{ $itemdetails->img_path }}" class="img-fluid">
+	 		</div>
+	 		<div class="col-lg-4">
+	 			
 	 			<p>{{ $itemdetails->name }}</p>
 	 			<p>{{ $itemdetails->description }}</p>
 	 			<p>{{ $itemdetails->price }}</p>
 
-	 			<a href="" class="btn btn-outline-dark">Edit</a>
-	 			<a href="" class="btn btn-outline-dark">Delete</a>
+	 			<a href="/menu/{{ $itemdetails->id }}/edit" class="btn btn-outline-dark">Edit</a>
+
+	 			<a href="" class="btn btn-outline-danger" data-toggle="modal" data-target="#deleteModal">Delete</a>
 	 		</div>
 
 	 	</div>
@@ -41,6 +48,33 @@
 	 </div>
 
 	
+<!-- delete modal -->
+	<div id="deleteModal" class="modal" tabindex="-1" role="dialog">
+	  <div class="modal-dialog" role="document">
+	    <div class="modal-content">
+	      <div class="modal-header">
+	        
+	        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+	          <span aria-hidden="true">&times;</span>
+	        </button>
+	      </div>
+	      <div class="modal-body">
+	      		<form method="POST" action="/menu/{{$itemdetails->id}}/delete">
+	 				{{ csrf_field() }}
+	 				{{ method_field("DELETE") }}
+	       			<p>Are you sure you want to delete this item {{ $itemdetails->name }}.</p>
+	 				<button type="submit" class="btn btn-outline-danger">Confirm</button>
+	 			</form>
+	      </div>
+	      <div class="modal-footer">
+	        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+	      </div>
+
+	    </div>
+	  </div>
+	</div>
+
+
 
 
 </body>

@@ -23,6 +23,10 @@
 		<div class="row">
 			
 			<div class="col-lg-12">
+
+				<div class="alert">
+					{{ Session::get('successmessage') }}
+				</div>
 				
 				<h1>Catalog</h1>
 
