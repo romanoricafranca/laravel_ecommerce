@@ -41,15 +41,31 @@
 						 {{ csrf_field() }}
 
 					<div class="form-group">
-
 					 	<label for="exampleInputEmail1">Name:</label>
 					    <input type="text" class="form-control" id="name" name="name">
+					</div>
 
-					   	<label for="exampleInputEmail1">Description:</label>
-					    <input type="text" class="form-control" id="description" name="description">
-					  
-					   	<label for="exampleInputEmail1">Price:</label>
-					    <input type="number" class="form-control" id="price" name="price" step="0.01" min="0">
+					   	<div class="form-group">
+					   		<label for="exampleInputEmail1">Description:</label>
+					    	<input type="text" class="form-control" id="description" name="description">
+						</div>
+
+					  	<div class="form-group">
+						   	<label for="exampleInputEmail1">Price:</label>
+						    <input type="number" class="form-control" id="price" name="price" step="0.01" min="0">
+						</div>
+
+						<div class="form-group">
+							<label>Item Categories:</label>
+							<select name="categories">
+
+							@foreach($categories as $category)
+							<option value="{{ $category->id }}" selected>{{ $category->name }}</option>@endforeach
+							
+							</select>
+						</div>					    
+
+						<div class="form-group">
 
 					   	<label for="exampleInputEmail1">Upload Image:</label>
 					    <input type="file" class="form-control-file" id="img_path" name="image">

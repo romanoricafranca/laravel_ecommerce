@@ -23,7 +23,9 @@ class ItemController extends Controller
 	}
 
 	public function showAdditemForm(){
-		return view('items.add_items');	
+		$categories = Category::all();
+
+		return view('items.add_items', compact('categories'));	
 
 	}
 
@@ -42,7 +44,7 @@ class ItemController extends Controller
 		$item->name = $request->name;
 		$item->description = $request->description;
 		$item->price = $request->price;
-		$item->category_id = 1;
+		$item->category_id = $request->categories;
 
 		//saving to laravel file
 		$image = $request->file('image');
@@ -62,6 +64,8 @@ class ItemController extends Controller
 	{
 		$itemdelete = Item::find($id);
 		$itemdelete->delete();
+
+		Session::flash("deletemessage", "Item has deleted!");
 		return redirect('/catalog');
 	}
 
@@ -81,7 +85,7 @@ class ItemController extends Controller
 			"description" => "required",
 			"price" => "required|numeric",
 			"categories" => "required",
-			"image"=>"required|image|mimes:jpeg,jpg,png,gif,svg|max:2048"
+			"image"=>"image|mimes:jpeg,jpg,png,gif,svg|max:2048"
 		);
 		//to validate $request from form
 		$this->validate($request,$rules);
@@ -105,7 +109,68 @@ class ItemController extends Controller
 
 		//items_table img_path
 		$itemupdate->save();
+
+
+		Session::flash("successmessage", "Item updated successfully!");
 		return redirect('/menu/'.$id); //itemdetails		
+
+	}
+
+
+	//Cart
+	public function addToCart($id, Request $request)
+	{
+		//if we have already items on cart
+		if (Session::has("cart"))
+		{
+			$cart = Session::get("cart"); // we wil get the data from our Session cart
+		}
+		else
+		{
+			$cart = []; //if none, initiliaze cart
+		}
+
+		//if item on cart is already set
+		if (isset($cart[$id]))
+		{
+			$cart[$id] += $request->quantity; //this will add only the quantity on existing item
+		}
+		else
+		{
+			$cart[$id] = $request->quantity; //this will create the item on the cart and quantity
+		}
+
+		Session::put('cart', $cart);
+		// dd($cart);
+		return redirect('/catalog');
+	}
+
+
+	public function showCart()
+	{
+		// dd(Session::get('cart'));
+
+		$item_cart = [];
+
+
+		if (Session::has('cart')) {
+			$cart = Session::get('cart');
+
+			$total = 0;
+
+			foreach ($cart as $id => $quantity) {
+				$item = Item::find($id); //item id from our session cart
+				$item->quantity = $quantity;
+				$item->subtotal = $item->price*$quantity;
+
+				$total += $item->subtotal;
+				$item_cart[] = $item; //item = id,name, description, price, img_path, category, and QUANTITY & SUBTOTAL 
+			}
+
+
+			return view('items.cart_content', compact('item_cart', 'total'));	
+		}
+
 
 	}
 }

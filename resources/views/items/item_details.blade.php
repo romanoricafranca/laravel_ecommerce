@@ -23,6 +23,13 @@
 	
 
 	 <div class="container">
+
+	 	@if(Session::has('successmessage'))
+	 	<div class="alert alert-success">
+	 		{{ Session::get('successmessage') }}
+	 	</div>
+	 	@endif
+
 	 	<h3 class="display-5 mt-5">Item Details</h3>
 	 	<hr class=" mb-5">
 	 	<div class="row">
@@ -59,6 +66,7 @@
 	        </button>
 	      </div>
 	      <div class="modal-body">
+	      	
 	      		<form method="POST" action="/menu/{{$itemdetails->id}}/delete">
 	 				{{ csrf_field() }}
 	 				{{ method_field("DELETE") }}

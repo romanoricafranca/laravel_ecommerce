@@ -39,6 +39,11 @@ Route::get('/menu/{id}/edit', 'ItemController@showEditForm');
 
 Route::put('/menu/{id}/edit', 'ItemController@updateItem');
 
+//addtocartmethod
+Route::post('/addToCart/{id}','ItemController@addToCart');
+
+Route::get('/showcart', 'ItemController@showCart');
+
 
 
 
