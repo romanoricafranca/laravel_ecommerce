@@ -26,9 +26,11 @@
 				<h1>My Cart</h1>
 			</div>
 			<div class="col-lg-12">
-				<table class="table table-dark">
+				@if($item_cart != null)
+				<table class="table table-striped">
 				  	<thead>
 					    <tr>
+					    	<th scope="col">Image</th>
 					      	<th scope="col">Item</th>
 					      	<th scope="col">Quantity</th>
 					     	<th scope="col">Price</th>
@@ -40,11 +42,27 @@
 					    
 					  		@foreach ($item_cart as $item)
 					  		<tr>
-					      	<td>{{ $item->name }}</td>
-					      	<td>{{ $item->quantity }}</td>
-					      	<td>{{ $item->price }}</td>
-					      	<td>{{ $item->subtotal }}</td>
-					      	<td></td>
+					  			<td><img src="{{ $item->img_path }}" height="100px" width="100px"></td>
+						      	<td>{{ $item->name }}</td>
+
+						      	<td>
+						      		<form action="/menu/mycart/{{$item->id}}/changeqty" method="POST">
+						      			{{ csrf_field() }}
+						      			{{ method_field('PATCH') }}
+						      			<input type="number" name="newqty" value="{{ $item->quantity }}">
+						      			<button class="btn btn-outline-primary">Update Quantity</button>
+						      		</form>
+						      	</td>
+						      	
+						      	<td>{{ $item->price }}</td>
+						      	<td>{{ $item->subtotal }}</td>
+						      	<td>
+						      		<form action="/menu/mycart/{{ $item->id }}/delete" method="POST">
+						      			{{ csrf_field() }}
+						      			{{ method_field('DELETE') }}
+						      		<button type="submit" class="btn btn-danger">Remove from cart</button>
+						      		</form>
+						      	</td>
 					      	</tr>
 					      	@endforeach
 
@@ -52,10 +70,25 @@
 
 				  	</tbody>
 				</table>
+
+		
+					
+
+
+					<a href="/menu/clearCart" class="btn btn-outline-dark">Clear Cart</a>
+
 				
+
 				<p class="lead">Total:{{ $total }} </p>
 
-				<a href="" type="button" class="btn btn-outline-dark">Go back to shopping</a>
+				<a href="/catalog" type="button" class="btn btn-outline-dark">Go back to shopping</a>
+
+
+
+				@else
+				<h2>Your Cart is Empty</h2>
+				<a href="/catalog" class="btn btn-primary">Go back to shopping..</a>
+				@endif
 			</div>
 		</div>
 	</div>

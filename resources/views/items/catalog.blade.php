@@ -52,6 +52,7 @@
 
 
 			@foreach($items as $item)
+			
 
 			<div class="col-lg-3">
 				<div class="card text-white bg-dark mb-3">

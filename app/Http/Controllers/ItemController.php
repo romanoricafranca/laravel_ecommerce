@@ -168,9 +168,33 @@ class ItemController extends Controller
 			}
 
 
-			return view('items.cart_content', compact('item_cart', 'total'));	
 		}
+			return view('items.cart_content', compact('item_cart', 'total'));	
 
 
+	}
+
+	public function deletecart($id)
+	{
+		Session::forget("cart.$id");//$cart[$id]
+		return redirect('showcart');
+	}
+
+	public function clearCart()
+	{
+		Session::forget('cart');
+		return redirect('/catalog');
+	}
+
+	public function updateCart($id, Request $request)
+	{
+		$cart = Session::get('cart'); //get all items in cart
+		$cart[$id] = $request->newqty;
+		
+		// dd($cart);
+
+		Session::put('cart', $cart);
+
+		return redirect('showcart');
 	}
 }
