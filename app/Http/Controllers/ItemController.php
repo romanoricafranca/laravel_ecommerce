@@ -6,6 +6,10 @@ use Illuminate\Http\Request;
 use App\Item;
 use App\Category;
 use Session;
+use App\Order;
+use DB;
+use Auth;
+
 class ItemController extends Controller
 {
     public function showItems(){
@@ -148,7 +152,7 @@ class ItemController extends Controller
 
 	public function showCart()
 	{
-		// dd(Session::get('cart'));
+		// Session::forget('cart');
 
 		$item_cart = [];
 
@@ -161,7 +165,7 @@ class ItemController extends Controller
 			foreach ($cart as $id => $quantity) {
 				$item = Item::find($id); //item id from our session cart
 				$item->quantity = $quantity;
-				$item->subtotal = $item->price*$quantity;
+				$item->subtotal = $item->price * $quantity;
 
 				$total += $item->subtotal;
 				$item_cart[] = $item; //item = id,name, description, price, img_path, category, and QUANTITY & SUBTOTAL 
@@ -196,5 +200,47 @@ class ItemController extends Controller
 		Session::put('cart', $cart);
 
 		return redirect('showcart');
+	}
+
+
+	public function checkout(){
+		$order = new Order;
+		$order->user_id = Auth::user()->id;
+		$order->status_id = 1;
+		$order->total = 0;
+		$order->save();
+
+		$cartitems = Session::get('cart');
+		$total = 0;
+
+		foreach ($cartitems as $item_id => $quantity) {
+			// $order_id = DB::table('orders')->orderBy('created_at', 'desc')->first();
+			// $item_orders = DB::table('item_orders')->insert(
+			// 	['item_id' => $item_id, 'order_id' => $order_id->id, 'quantity' => $quantity]
+			// );
+
+			$order->items()->attach($item_id, ['quantity' => $quantity]);
+
+			$item = Item::find($item_id);
+			$total += $item->price * $quantity;
+		}	
+
+		$ordertotal = Order::find($order->id);
+		$ordertotal->total = $total;
+		$ordertotal->save();
+
+
+
+
+
+	}
+
+
+	public function showTransactions(){
+
+		$orders = Order::all();
+
+		return view('items.transactions', compact('orders'));
+
 	}
 }

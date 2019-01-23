@@ -1,0 +1,8 @@
+CSP 3 Requirements
+
+1. Minimum of 2 CRUD (except user)
+2. 1. Middleware authorization (Except Auth)
+3. 1 Pivot table (many to many)
+4. Mobile responsive
+5. Hosted
+6. For improvements - maximize use of AJAX

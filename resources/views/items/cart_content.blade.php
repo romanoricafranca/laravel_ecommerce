@@ -60,7 +60,7 @@
 						      		<form action="/menu/mycart/{{ $item->id }}/delete" method="POST">
 						      			{{ csrf_field() }}
 						      			{{ method_field('DELETE') }}
-						      		<button type="submit" class="btn btn-danger">Remove from cart</button>
+						      		<button type="submit" class="btn btn-outline-danger">Remove from cart</button>
 						      		</form>
 						      	</td>
 					      	</tr>
@@ -70,18 +70,15 @@
 
 				  	</tbody>
 				</table>
-
-		
-					
-
-
-					<a href="/menu/clearCart" class="btn btn-outline-dark">Clear Cart</a>
-
 				
 
 				<p class="lead">Total:{{ $total }} </p>
 
-				<a href="/catalog" type="button" class="btn btn-outline-dark">Go back to shopping</a>
+				<a href="/menu/clearCart" class="btn btn-outline-danger">Clear Cart</a>
+
+				<a href="/checkout" class="btn btn-outline-success">Check out</a>
+
+				<a href="/catalog" class="btn btn-outline-dark">Go back to shopping</a>
 
 
 
